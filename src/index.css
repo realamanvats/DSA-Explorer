@@ -1,12 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* --- KEY CHANGE: Switched to Satoshi font for a more modern, consistent look --- */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* You should set the font in tailwind.config.js, but this is a good fallback */
   html {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Satoshi', system-ui, sans-serif;
   }
   
   body {
@@ -15,6 +18,7 @@
 }
 
 @layer components {
+  /* --- Your original custom components --- */
   .glass-card {
     @apply bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl border border-white/20 dark:border-gray-700/30;
   }
@@ -30,9 +34,25 @@
   .card-hover {
     @apply transform hover:scale-[1.02] hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl;
   }
+
+  /* --- NEW: Added control-button for the visualizer --- */
+  .control-button {
+    @apply group relative inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r text-white font-bold rounded-lg shadow-lg overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .control-button > span {
+     @apply absolute top-0 left-0 w-0 h-full bg-white/20 transition-all duration-500 group-hover:w-full;
+  }
 }
 
-/* Custom scrollbar */
+@layer utilities {
+    /* --- NEW: Added grid background utility for the visualizer --- */
+    .bg-grid-cyan-500\/10 {
+        background-image: linear-gradient(theme(colors.cyan.500/10) 1px, transparent 1px), linear-gradient(to right, theme(colors.cyan.500/10) 1px, transparent 1px);
+        background-size: 2rem 2rem;
+    }
+}
+
+/* --- Your original custom scrollbar styles (preserved) --- */
 ::-webkit-scrollbar {
   width: 8px;
 }
