@@ -1,5 +1,5 @@
-// import React, { useState } from 'react';
-// import { motion } from 'framer-motion';
+// import React, { useState, useEffect } from 'react';
+// import { motion, AnimatePresence } from 'framer-motion';
 // import { 
 //   Code, 
 //   Palette, 
@@ -22,12 +22,35 @@
 //   Target,
 //   Award,
 //   Users,
-//   TrendingUp
+//   TrendingUp,
+//   Sparkles,
+//   Brain,
+//   Rocket,
+//   CpuIcon,
+//   Code2,
+//   GitBranch,
+//   Puzzle
 // } from 'lucide-react';
 
 // const About: React.FC = () => {
 //   const [expandedTech, setExpandedTech] = useState<string | null>(null);
 //   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
+//   const [activeBackground, setActiveBackground] = useState(0);
+
+//   // Rotate through background gradients
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setActiveBackground(prev => (prev + 1) % 4);
+//     }, 8000);
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   const backgroundGradients = [
+//     "bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900",
+//     "bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900",
+//     "bg-gradient-to-br from-cyan-900 via-blue-900 to-indigo-900",
+//     "bg-gradient-to-br from-violet-900 via-purple-900 to-fuchsia-900"
+//   ];
 
 //   const technologies = [
 //     {
@@ -38,6 +61,7 @@
 //       description: "Modern React with hooks, concurrent features, and automatic batching",
 //       icon: Code,
 //       color: "from-blue-500 to-cyan-500",
+//       gradient: "bg-gradient-to-r from-blue-500 to-cyan-500",
 //       whyChosen: "React provides excellent component reusability, virtual DOM for performance, and a rich ecosystem. React 18's concurrent features help with smooth animations during algorithm visualizations.",
 //       whereUsed: [
 //         "Component-based architecture for all UI elements",
@@ -60,8 +84,9 @@
 //       name: "TypeScript",
 //       version: "^5.5.3",
 //       description: "Typed superset of JavaScript providing compile-time type checking",
-//       icon: Code,
+//       icon: Code2,
 //       color: "from-blue-600 to-indigo-600",
+//       gradient: "bg-gradient-to-r from-blue-600 to-indigo-600",
 //       whyChosen: "TypeScript prevents runtime errors, improves code maintainability, and provides better IDE support with autocomplete and refactoring capabilities.",
 //       whereUsed: [
 //         "All component props and state typing",
@@ -86,6 +111,7 @@
 //       description: "Next-generation frontend build tool with lightning-fast HMR",
 //       icon: Zap,
 //       color: "from-yellow-500 to-orange-500",
+//       gradient: "bg-gradient-to-r from-yellow-500 to-orange-500",
 //       whyChosen: "Vite offers extremely fast development server startup, instant hot module replacement, and optimized production builds using Rollup.",
 //       whereUsed: [
 //         "Development server with hot reload",
@@ -110,6 +136,7 @@
 //       description: "Utility-first CSS framework for rapid UI development",
 //       icon: Palette,
 //       color: "from-teal-500 to-green-500",
+//       gradient: "bg-gradient-to-r from-teal-500 to-green-500",
 //       whyChosen: "Tailwind enables rapid prototyping, consistent design systems, and smaller CSS bundles through utility classes and purging unused styles.",
 //       whereUsed: [
 //         "All component styling and layouts",
@@ -132,8 +159,9 @@
 //       name: "Framer Motion",
 //       version: "^12.23.12",
 //       description: "Production-ready motion library for React with declarative animations",
-//       icon: Zap,
+//       icon: Rocket,
 //       color: "from-purple-500 to-pink-500",
+//       gradient: "bg-gradient-to-r from-purple-500 to-pink-500",
 //       whyChosen: "Framer Motion provides smooth, performant animations with simple declarative syntax, perfect for algorithm visualizations and UI transitions.",
 //       whereUsed: [
 //         "Algorithm step-by-step animations",
@@ -156,8 +184,9 @@
 //       name: "React Router DOM",
 //       version: "^7.7.1",
 //       description: "Declarative routing library for React applications",
-//       icon: Globe,
+//       icon: GitBranch,
 //       color: "from-red-500 to-rose-500",
+//       gradient: "bg-gradient-to-r from-red-500 to-rose-500",
 //       whyChosen: "React Router provides client-side routing with nested routes, code splitting, and excellent TypeScript support for navigation.",
 //       whereUsed: [
 //         "Navigation between different sections",
@@ -180,8 +209,9 @@
 //       name: "Lucide React",
 //       version: "^0.344.0",
 //       description: "Beautiful and consistent icon library with 1000+ SVG icons",
-//       icon: Target,
+//       icon: Puzzle,
 //       color: "from-indigo-500 to-blue-500",
+//       gradient: "bg-gradient-to-r from-indigo-500 to-blue-500",
 //       whyChosen: "Lucide provides consistent, customizable SVG icons that are lightweight, accessible, and perfectly suited for modern web applications.",
 //       whereUsed: [
 //         "Navigation menu icons",
@@ -206,6 +236,7 @@
 //       description: "Lightweight toast notification library with excellent UX",
 //       icon: CheckCircle,
 //       color: "from-green-500 to-emerald-500",
+//       gradient: "bg-gradient-to-r from-green-500 to-emerald-500",
 //       whyChosen: "React Hot Toast provides beautiful, accessible notifications with minimal setup and excellent performance.",
 //       whereUsed: [
 //         "Success/error feedback for user actions",
@@ -388,52 +419,126 @@
 //     { icon: Award, label: "Topics", value: "8", description: "Major CS concepts covered" }
 //   ];
 
+//   // Animation variants
+//   const fadeIn = {
+//     hidden: { opacity: 0, y: 20 },
+//     visible: { 
+//       opacity: 1, 
+//       y: 0,
+//       transition: { duration: 0.6 }
+//     }
+//   };
+
+//   const staggerChildren = {
+//     visible: {
+//       transition: {
+//         staggerChildren: 0.1
+//       }
+//     }
+//   };
+
+//   const pulse = {
+//     scale: [1, 1.05, 1],
+//     transition: { duration: 2, repeat: Infinity }
+//   };
+
 //   return (
-//     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900">
-//       <div className="container mx-auto px-4 py-12">
+//     <div className={`min-h-screen transition-all duration-1000 ${backgroundGradients[activeBackground]} relative overflow-hidden`}>
+//       {/* Animated background elements */}
+//       <div className="absolute inset-0 overflow-hidden">
+//         {[...Array(15)].map((_, i) => (
+//           <motion.div
+//             key={i}
+//             className="absolute rounded-full bg-white/10"
+//             initial={{ 
+//               x: Math.random() * 100 + '%', 
+//               y: Math.random() * 100 + '%',
+//               scale: 0
+//             }}
+//             animate={{ 
+//               x: [Math.random() * 100 + '%', Math.random() * 100 + '%'],
+//               y: [Math.random() * 100 + '%', Math.random() * 100 + '%'],
+//               scale: [0, Math.random() * 0.5 + 0.3, 0],
+//               opacity: [0, 0.3, 0]
+//             }}
+//             transition={{ 
+//               duration: Math.random() * 10 + 10,
+//               repeat: Infinity,
+//               delay: Math.random() * 5
+//             }}
+//             style={{
+//               width: Math.random() * 100 + 50,
+//               height: Math.random() * 100 + 50,
+//             }}
+//           />
+//         ))}
+//       </div>
+
+//       <div className="container mx-auto px-4 py-12 relative z-10">
 //         {/* Hero Section */}
 //         <motion.div
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6 }}
+//           initial="hidden"
+//           animate="visible"
+//           variants={fadeIn}
 //           className="text-center mb-16"
 //         >
-//           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent mb-6">
-//             DSA Explorer: Technical Deep Dive
+//           <motion.div
+//             variants={pulse}
+//             className="inline-block mb-6"
+//           >
+//             <Sparkles className="w-12 h-12 text-yellow-400 mx-auto" />
+//           </motion.div>
+//           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400 bg-clip-text text-transparent mb-6 font-mono tracking-tight">
+//             DSA <span className="text-white">Explorer</span>
 //           </h1>
-//           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-//             A comprehensive analysis of the technologies, architectural decisions, and implementation 
-//             strategies behind this interactive Data Structures and Algorithms learning platform.
+//           <p className="text-xl text-white/90 max-w-4xl mx-auto leading-relaxed font-light">
+//             A <span className="font-bold text-cyan-300">comprehensive analysis</span> of the technologies, architectural decisions, and implementation 
+//             strategies behind this interactive <span className="font-bold text-purple-300">Data Structures and Algorithms</span> learning platform.
 //           </p>
 //         </motion.div>
 
 //         {/* Project Statistics */}
 //         <motion.section
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6, delay: 0.1 }}
+//           initial="hidden"
+//           animate="visible"
+//           variants={{
+//             hidden: {},
+//             visible: {
+//               transition: {
+//                 staggerChildren: 0.1
+//               }
+//             }
+//           }}
 //           className="mb-16"
 //         >
-//           <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">
-//             Project Overview
+//           <h2 className="text-3xl font-bold text-white mb-8 text-center font-mono">
+//             Project <span className="text-cyan-300">Overview</span>
 //           </h2>
 //           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
 //             {projectStats.map((stat, index) => (
 //               <motion.div
 //                 key={stat.label}
-//                 initial={{ opacity: 0, scale: 0.8 }}
-//                 animate={{ opacity: 1, scale: 1 }}
-//                 transition={{ duration: 0.5, delay: 0.1 * index }}
-//                 className="text-center p-6 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300"
+//                 variants={fadeIn}
+//                 className="text-center p-6 bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 hover:border-cyan-400/30 transition-all duration-300 group"
+//                 whileHover={{ 
+//                   y: -5,
+//                   scale: 1.02,
+//                   transition: { duration: 0.2 }
+//                 }}
 //               >
-//                 <stat.icon className="w-8 h-8 text-blue-600 dark:text-blue-400 mx-auto mb-3" />
-//                 <div className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
+//                 <motion.div
+//                   whileHover={{ rotate: 360 }}
+//                   transition={{ duration: 0.5 }}
+//                 >
+//                   <stat.icon className="w-8 h-8 text-cyan-400 mx-auto mb-3 group-hover:text-cyan-300 transition-colors" />
+//                 </motion.div>
+//                 <div className="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">
 //                   {stat.value}
 //                 </div>
-//                 <div className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+//                 <div className="text-sm font-medium text-white/80 mb-1">
 //                   {stat.label}
 //                 </div>
-//                 <div className="text-xs text-gray-500 dark:text-gray-400">
+//                 <div className="text-xs text-white/60">
 //                   {stat.description}
 //                 </div>
 //               </motion.div>
@@ -443,13 +548,13 @@
 
 //         {/* Technology Stack Deep Dive */}
 //         <motion.section
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6, delay: 0.2 }}
+//           initial="hidden"
+//           animate="visible"
+//           variants={fadeIn}
 //           className="mb-16"
 //         >
-//           <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">
-//             Technology Stack Analysis
+//           <h2 className="text-3xl font-bold text-white mb-8 text-center font-mono">
+//             Technology <span className="text-purple-300">Stack Analysis</span>
 //           </h2>
 //           <div className="space-y-6">
 //             {technologies.map((tech, index) => (
@@ -458,104 +563,131 @@
 //                 initial={{ opacity: 0, y: 20 }}
 //                 animate={{ opacity: 1, y: 0 }}
 //                 transition={{ duration: 0.6, delay: 0.1 * index }}
-//                 className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 overflow-hidden"
+//                 className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 overflow-hidden group"
+//                 whileHover={{ 
+//                   boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)"
+//                 }}
 //               >
 //                 <div 
-//                   className="p-6 cursor-pointer hover:bg-gray-50/50 dark:hover:bg-gray-700/50 transition-colors"
+//                   className="p-6 cursor-pointer hover:bg-white/5 transition-colors"
 //                   onClick={() => setExpandedTech(expandedTech === tech.id ? null : tech.id)}
 //                 >
 //                   <div className="flex items-center justify-between">
 //                     <div className="flex items-center space-x-4">
-//                       <div className={`p-3 bg-gradient-to-r ${tech.color} rounded-xl`}>
+//                       <motion.div 
+//                         className={`p-3 ${tech.gradient} rounded-xl shadow-lg`}
+//                         whileHover={{ rotate: 15 }}
+//                         transition={{ type: "spring", stiffness: 300 }}
+//                       >
 //                         <tech.icon className="w-6 h-6 text-white" />
-//                       </div>
+//                       </motion.div>
 //                       <div>
-//                         <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+//                         <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
 //                           {tech.name}
 //                         </h3>
-//                         <p className="text-sm text-gray-600 dark:text-gray-300">
+//                         <p className="text-sm text-white/70">
 //                           {tech.category} • Version {tech.version}
 //                         </p>
-//                         <p className="text-gray-600 dark:text-gray-400 mt-1">
+//                         <p className="text-white/80 mt-1">
 //                           {tech.description}
 //                         </p>
 //                       </div>
 //                     </div>
-//                     {expandedTech === tech.id ? (
-//                       <ChevronUp className="w-5 h-5 text-gray-500" />
-//                     ) : (
-//                       <ChevronDown className="w-5 h-5 text-gray-500" />
-//                     )}
+//                     <motion.div
+//                       animate={{ rotate: expandedTech === tech.id ? 180 : 0 }}
+//                       transition={{ duration: 0.3 }}
+//                     >
+//                       {expandedTech === tech.id ? (
+//                         <ChevronUp className="w-5 h-5 text-white/70" />
+//                       ) : (
+//                         <ChevronDown className="w-5 h-5 text-white/70" />
+//                       )}
+//                     </motion.div>
 //                   </div>
 //                 </div>
 
-//                 {expandedTech === tech.id && (
-//                   <motion.div
-//                     initial={{ opacity: 0, height: 0 }}
-//                     animate={{ opacity: 1, height: 'auto' }}
-//                     exit={{ opacity: 0, height: 0 }}
-//                     className="px-6 pb-6 border-t border-gray-200/50 dark:border-gray-700/50"
-//                   >
-//                     <div className="grid md:grid-cols-2 gap-6 mt-6">
-//                       <div>
-//                         <h4 className="font-semibold text-gray-800 dark:text-white mb-3 flex items-center">
-//                           <Target className="w-4 h-4 mr-2 text-blue-600" />
-//                           Why We Chose This Technology
-//                         </h4>
-//                         <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
-//                           {tech.whyChosen}
-//                         </p>
+//                 <AnimatePresence>
+//                   {expandedTech === tech.id && (
+//                     <motion.div
+//                       initial={{ opacity: 0, height: 0 }}
+//                       animate={{ opacity: 1, height: 'auto' }}
+//                       exit={{ opacity: 0, height: 0 }}
+//                       transition={{ duration: 0.4 }}
+//                       className="px-6 pb-6 border-t border-white/10"
+//                     >
+//                       <div className="grid md:grid-cols-2 gap-6 mt-6">
+//                         <div>
+//                           <h4 className="font-semibold text-white mb-3 flex items-center">
+//                             <Target className="w-4 h-4 mr-2 text-cyan-400" />
+//                             Why We Chose This Technology
+//                           </h4>
+//                           <p className="text-white/80 text-sm leading-relaxed mb-4">
+//                             {tech.whyChosen}
+//                           </p>
+                          
+//                           <h4 className="font-semibold text-white mb-3 flex items-center">
+//                             <Settings className="w-4 h-4 mr-2 text-green-400" />
+//                             Where It's Used
+//                           </h4>
+//                           <ul className="space-y-1">
+//                             {tech.whereUsed.map((usage, i) => (
+//                               <motion.li 
+//                                 key={i} 
+//                                 className="text-white/80 text-sm flex items-start"
+//                                 initial={{ opacity: 0, x: -10 }}
+//                                 animate={{ opacity: 1, x: 0 }}
+//                                 transition={{ delay: i * 0.1 }}
+//                               >
+//                                 <CheckCircle className="w-3 h-3 text-green-400 mr-2 mt-0.5 flex-shrink-0" />
+//                                 {usage}
+//                               </motion.li>
+//                             ))}
+//                           </ul>
+//                         </div>
                         
-//                         <h4 className="font-semibold text-gray-800 dark:text-white mb-3 flex items-center">
-//                           <Settings className="w-4 h-4 mr-2 text-green-600" />
-//                           Where It's Used
-//                         </h4>
-//                         <ul className="space-y-1">
-//                           {tech.whereUsed.map((usage, i) => (
-//                             <li key={i} className="text-gray-600 dark:text-gray-300 text-sm flex items-start">
-//                               <CheckCircle className="w-3 h-3 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-//                               {usage}
-//                             </li>
-//                           ))}
-//                         </ul>
-//                       </div>
-                      
-//                       <div>
-//                         <h4 className="font-semibold text-gray-800 dark:text-white mb-3 flex items-center">
-//                           <Award className="w-4 h-4 mr-2 text-purple-600" />
-//                           Key Benefits
-//                         </h4>
-//                         <ul className="space-y-1 mb-4">
-//                           {tech.benefits.map((benefit, i) => (
-//                             <li key={i} className="text-gray-600 dark:text-gray-300 text-sm flex items-start">
-//                               <TrendingUp className="w-3 h-3 text-purple-500 mr-2 mt-0.5 flex-shrink-0" />
-//                               {benefit}
-//                             </li>
-//                           ))}
-//                         </ul>
-                        
-//                         <div className="space-y-2">
-//                           <div>
-//                             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-//                               Alternatives Considered:
-//                             </span>
-//                             <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
-//                               {tech.alternatives}
-//                             </span>
-//                           </div>
-//                           <div>
-//                             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-//                               Learning Curve:
-//                             </span>
-//                             <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
-//                               {tech.learningCurve}
-//                             </span>
+//                         <div>
+//                           <h4 className="font-semibold text-white mb-3 flex items-center">
+//                             <Award className="w-4 h-4 mr-2 text-purple-400" />
+//                             Key Benefits
+//                           </h4>
+//                           <ul className="space-y-1 mb-4">
+//                             {tech.benefits.map((benefit, i) => (
+//                               <motion.li 
+//                                 key={i} 
+//                                 className="text-white/80 text-sm flex items-start"
+//                                 initial={{ opacity: 0, x: -10 }}
+//                                 animate={{ opacity: 1, x: 0 }}
+//                                 transition={{ delay: i * 0.1 }}
+//                               >
+//                                 <TrendingUp className="w-3 h-3 text-purple-400 mr-2 mt-0.5 flex-shrink-0" />
+//                                 {benefit}
+//                               </motion.li>
+//                             ))}
+//                           </ul>
+                          
+//                           <div className="space-y-2">
+//                             <div>
+//                               <span className="text-sm font-medium text-white">
+//                                 Alternatives Considered:
+//                               </span>
+//                               <span className="text-sm text-white/70 ml-2">
+//                                 {tech.alternatives}
+//                               </span>
+//                             </div>
+//                             <div>
+//                               <span className="text-sm font-medium text-white">
+//                                 Learning Curve:
+//                               </span>
+//                               <span className="text-sm text-white/70 ml-2">
+//                                 {tech.learningCurve}
+//                               </span>
+//                             </div>
 //                           </div>
 //                         </div>
 //                       </div>
-//                     </div>
-//                   </motion.div>
-//                 )}
+//                     </motion.div>
+//                   )}
+//                 </AnimatePresence>
 //               </motion.div>
 //             ))}
 //           </div>
@@ -563,32 +695,42 @@
 
 //         {/* Development Tools */}
 //         <motion.section
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6, delay: 0.4 }}
+//           initial="hidden"
+//           animate="visible"
+//           variants={{
+//             hidden: {},
+//             visible: {
+//               transition: {
+//                 staggerChildren: 0.1
+//               }
+//             }
+//           }}
 //           className="mb-16"
 //         >
-//           <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">
-//             Development Tools & Configuration
+//           <h2 className="text-3xl font-bold text-white mb-8 text-center font-mono">
+//             Development <span className="text-green-400">Tools</span>
 //           </h2>
 //           <div className="grid md:grid-cols-3 gap-6">
 //             {developmentTools.map((tool, index) => (
 //               <motion.div
 //                 key={tool.name}
-//                 initial={{ opacity: 0, y: 20 }}
-//                 animate={{ opacity: 1, y: 0 }}
-//                 transition={{ duration: 0.6, delay: 0.1 * index }}
-//                 className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20"
+//                 variants={fadeIn}
+//                 className="bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-white/10 group"
+//                 whileHover={{ 
+//                   y: -5,
+//                   scale: 1.02,
+//                   transition: { duration: 0.2 }
+//                 }}
 //               >
-//                 <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+//                 <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-green-300 transition-colors">
 //                   {tool.name}
 //                 </h3>
-//                 <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+//                 <p className="text-white/80 text-sm mb-3">
 //                   {tool.purpose}
 //                 </p>
 //                 <div className="flex items-start space-x-2">
-//                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-//                   <p className="text-gray-600 dark:text-gray-300 text-sm">
+//                   <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+//                   <p className="text-white/80 text-sm">
 //                     {tool.benefit}
 //                   </p>
 //                 </div>
@@ -599,25 +741,31 @@
 
 //         {/* Interview Questions */}
 //         <motion.section
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6, delay: 0.6 }}
+//           initial="hidden"
+//           animate="visible"
+//           variants={fadeIn}
 //           className="mb-16"
 //         >
-//           <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">
-//             Interview Preparation Guide
+//           <h2 className="text-3xl font-bold text-white mb-8 text-center font-mono">
+//             Interview <span className="text-yellow-300">Preparation</span>
 //           </h2>
-//           <p className="text-center text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+//           <p className="text-center text-white/80 mb-8 max-w-3xl mx-auto">
 //             Comprehensive questions and detailed answers to help you prepare for technical interviews 
 //             about this project. Each answer includes technical depth and practical insights.
 //           </p>
           
 //           <div className="space-y-6">
 //             {interviewQuestions.map((category, categoryIndex) => (
-//               <div key={category.id} className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 overflow-hidden">
-//                 <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 border-b border-gray-200/50 dark:border-gray-700/50">
-//                   <h3 className="text-xl font-bold text-gray-800 dark:text-white flex items-center">
-//                     <BookOpen className="w-5 h-5 mr-2 text-blue-600" />
+//               <motion.div 
+//                 key={category.id} 
+//                 className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
+//                 initial={{ opacity: 0, y: 20 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 transition={{ delay: categoryIndex * 0.1 }}
+//               >
+//                 <div className="p-6 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border-b border-white/10">
+//                   <h3 className="text-xl font-bold text-white flex items-center">
+//                     <BookOpen className="w-5 h-5 mr-2 text-blue-400" />
 //                     {category.category}
 //                   </h3>
 //                 </div>
@@ -626,101 +774,122 @@
 //                   {category.questions.map((qa, qaIndex) => (
 //                     <div key={qaIndex} className="border-l-4 border-blue-500 pl-4">
 //                       <div 
-//                         className="cursor-pointer hover:bg-gray-50/50 dark:hover:bg-gray-700/50 p-3 rounded-lg transition-colors"
+//                         className="cursor-pointer hover:bg-white/5 p-3 rounded-lg transition-colors"
 //                         onClick={() => setExpandedFaq(expandedFaq === `${category.id}-${qaIndex}` ? null : `${category.id}-${qaIndex}`)}
 //                       >
 //                         <div className="flex items-start justify-between">
-//                           <h4 className="font-semibold text-gray-800 dark:text-white pr-4">
-//                             Q: {qa.question}
+//                           <h4 className="font-semibold text-white pr-4">
+//                             <span className="text-blue-400">Q:</span> {qa.question}
 //                           </h4>
-//                           {expandedFaq === `${category.id}-${qaIndex}` ? (
-//                             <ChevronUp className="w-5 h-5 text-gray-500 flex-shrink-0" />
-//                           ) : (
-//                             <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
-//                           )}
+//                           <motion.div
+//                             animate={{ rotate: expandedFaq === `${category.id}-${qaIndex}` ? 180 : 0 }}
+//                             transition={{ duration: 0.3 }}
+//                           >
+//                             {expandedFaq === `${category.id}-${qaIndex}` ? (
+//                               <ChevronUp className="w-5 h-5 text-white/70 flex-shrink-0" />
+//                             ) : (
+//                               <ChevronDown className="w-5 h-5 text-white/70 flex-shrink-0" />
+//                             )}
+//                           </motion.div>
 //                         </div>
 //                       </div>
                       
-//                       {expandedFaq === `${category.id}-${qaIndex}` && (
-//                         <motion.div
-//                           initial={{ opacity: 0, height: 0 }}
-//                           animate={{ opacity: 1, height: 'auto' }}
-//                           exit={{ opacity: 0, height: 0 }}
-//                           className="mt-3 p-4 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg"
-//                         >
-//                           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-//                             <strong className="text-blue-600 dark:text-blue-400">A:</strong> {qa.answer}
-//                           </p>
-//                         </motion.div>
-//                       )}
+//                       <AnimatePresence>
+//                         {expandedFaq === `${category.id}-${qaIndex}` && (
+//                           <motion.div
+//                             initial={{ opacity: 0, height: 0 }}
+//                             animate={{ opacity: 1, height: 'auto' }}
+//                             exit={{ opacity: 0, height: 0 }}
+//                             transition={{ duration: 0.4 }}
+//                             className="mt-3 p-4 bg-blue-500/20 rounded-lg"
+//                           >
+//                             <p className="text-white/90 leading-relaxed">
+//                               <strong className="text-blue-300">A:</strong> {qa.answer}
+//                             </p>
+//                           </motion.div>
+//                         )}
+//                       </AnimatePresence>
 //                     </div>
 //                   ))}
 //                 </div>
-//               </div>
+//               </motion.div>
 //             ))}
 //           </div>
 //         </motion.section>
 
 //         {/* Browser Compatibility & Performance */}
 //         <motion.section
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6, delay: 0.8 }}
+//           initial="hidden"
+//           animate="visible"
+//           variants={{
+//             hidden: {},
+//             visible: {
+//               transition: {
+//                 staggerChildren: 0.1
+//               }
+//             }
+//           }}
 //           className="mb-16"
 //         >
-//           <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">
-//             Performance & Compatibility
+//           <h2 className="text-3xl font-bold text-white mb-8 text-center font-mono">
+//             Performance <span className="text-rose-400">&</span> Compatibility
 //           </h2>
 //           <div className="grid md:grid-cols-2 gap-8">
-//             <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-//               <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-//                 <Monitor className="w-5 h-5 mr-2 text-green-600" />
+//             <motion.div 
+//               variants={fadeIn}
+//               className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/10"
+//             >
+//               <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+//                 <Monitor className="w-5 h-5 mr-2 text-green-400" />
 //                 Browser Support
 //               </h3>
 //               <div className="space-y-3">
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">Chrome</span>
-//                   <span className="text-green-600 font-medium">90+ ✓</span>
+//                   <span className="text-white/80">Chrome</span>
+//                   <span className="text-green-400 font-medium">90+ ✓</span>
 //                 </div>
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">Firefox</span>
-//                   <span className="text-green-600 font-medium">88+ ✓</span>
+//                   <span className="text-white/80">Firefox</span>
+//                   <span className="text-green-400 font-medium">88+ ✓</span>
 //                 </div>
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">Safari</span>
-//                   <span className="text-green-600 font-medium">14+ ✓</span>
+//                   <span className="text-white/80">Safari</span>
+//                   <span className="text-green-400 font-medium">14+ ✓</span>
 //                 </div>
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">Edge</span>
-//                   <span className="text-green-600 font-medium">90+ ✓</span>
+//                   <span className="text-white/80">Edge</span>
+//                   <span className="text-green-400 font-medium">90+ ✓</span>
 //                 </div>
 //               </div>
-//             </div>
+//             </motion.div>
             
-//             <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-//               <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-//                 <Zap className="w-5 h-5 mr-2 text-yellow-600" />
+//             <motion.div 
+//               variants={fadeIn}
+//               className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/10"
+//             >
+//               <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+//                 <Zap className="w-5 h-5 mr-2 text-yellow-400" />
 //                 Performance Metrics
 //               </h3>
 //               <div className="space-y-3">
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">Bundle Size</span>
-//                   <span className="text-blue-600 font-medium">~2.1MB</span>
+//                   <span className="text-white/80">Bundle Size</span>
+//                   <span className="text-blue-400 font-medium">~2.1MB</span>
 //                 </div>
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">First Load</span>
-//                   <span className="text-green-600 font-medium">&lt; 3s</span>
+//                   <span className="text-white/80">First Load</span>
+//                   <span className="text-green-400 font-medium">&lt; 3s</span>
 //                 </div>
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">Animation FPS</span>
-//                   <span className="text-green-600 font-medium">60 FPS</span>
+//                   <span className="text-white/80">Animation FPS</span>
+//                   <span className="text-green-400 font-medium">60 FPS</span>
 //                 </div>
 //                 <div className="flex justify-between items-center">
-//                   <span className="text-gray-600 dark:text-gray-300">Lighthouse Score</span>
-//                   <span className="text-green-600 font-medium">95+</span>
+//                   <span className="text-white/80">Lighthouse Score</span>
+//                   <span className="text-green-400 font-medium">95+</span>
 //                 </div>
 //               </div>
-//             </div>
+//             </motion.div>
 //           </div>
 //         </motion.section>
 
@@ -728,31 +897,36 @@
 //         <motion.section
 //           initial={{ opacity: 0, y: 20 }}
 //           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6, delay: 1.0 }}
-//           className="text-center bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 rounded-3xl p-12 text-white shadow-2xl"
+//           transition={{ duration: 0.6, delay: 0.2 }}
+//           className="text-center bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 rounded-3xl p-12 text-white shadow-2xl relative overflow-hidden"
 //         >
-//           <h2 className="text-3xl font-bold mb-4">
-//             Ready to Explore the Code?
-//           </h2>
-//           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-//             This comprehensive technical overview should prepare you for any interview questions 
-//             about the project's architecture, implementation, and design decisions.
-//           </p>
-//           <div className="flex flex-wrap justify-center gap-4">
-//             <motion.button
-//               whileHover={{ scale: 1.05 }}
-//               whileTap={{ scale: 0.95 }}
-//               className="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
-//             >
-//               View Source Code
-//             </motion.button>
-//             <motion.button
-//               whileHover={{ scale: 1.05 }}
-//               whileTap={{ scale: 0.95 }}
-//               className="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-blue-600 transition-colors"
-//             >
-//               Live Demo
-//             </motion.button>
+//           <div className="absolute inset-0 bg-black/20"></div>
+//           <div className="relative z-10">
+//             <h2 className="text-3xl font-bold mb-4">
+//               Ready to Explore the Code?
+//             </h2>
+//             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+//               This comprehensive technical overview should prepare you for any interview questions 
+//               about the project's architecture, implementation, and design decisions.
+//             </p>
+//             <div className="flex flex-wrap justify-center gap-4">
+//               <motion.button
+//                 whileHover={{ scale: 1.05 }}
+//                 whileTap={{ scale: 0.95 }}
+//                 className="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg flex items-center"
+//               >
+//                 <Code className="w-5 h-5 mr-2" />
+//                 View Source Code
+//               </motion.button>
+//               <motion.button
+//                 whileHover={{ scale: 1.05 }}
+//                 whileTap={{ scale: 0.95 }}
+//                 className="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-blue-600 transition-colors flex items-center"
+//               >
+//                 <Globe className="w-5 h-5 mr-2" />
+//                 Live Demo
+//               </motion.button>
+//             </div>
 //           </div>
 //         </motion.section>
 //       </div>
@@ -761,22 +935,6 @@
 // };
 
 // export default About;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
